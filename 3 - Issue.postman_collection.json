@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "5d04be85-da17-483e-84d8-42344173a698",
+		"name": "3 - Issue",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8007385"
+	},
+	"item": [
+		{
+			"name": "200 - Create issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Id is returned\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.exist;",
+							"",
+							"    pm.globals.set(\"projectId\", jsonData.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"issue-type\",\n    \"title\": \"issue-title\",\n    \"description\": \"issue-description\",\n    \"status\": \"issue-status\",\n    \"assignee\": \"issue-assignee\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/projects/{{projectId}}/sprints/{{sprintId}}/issues",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"projects",
+						"{{projectId}}",
+						"sprints",
+						"{{sprintId}}",
+						"issues"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
